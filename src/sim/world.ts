@@ -13,6 +13,7 @@ export interface World {
   rng: Rng;
   altitude: Float32Array;
   humidity: Float32Array;
+  baseHumidity: Float32Array;
   temperature: Float32Array;
   water: Float32Array;
   tension: Float32Array;
@@ -53,6 +54,7 @@ export const createWorld = (seed: number, frequency = GRID_FREQUENCY): World => 
     rng,
     altitude: new Float32Array(grid.count),
     humidity: new Float32Array(grid.count),
+    baseHumidity: new Float32Array(grid.count),
     temperature: new Float32Array(grid.count),
     water: new Float32Array(grid.count),
     tension: new Float32Array(grid.count),
@@ -71,6 +73,7 @@ export const createWorld = (seed: number, frequency = GRID_FREQUENCY): World => 
     const altitude = smoothNoise(rng, x, y, z, phases) * 0.55 + 0.05;
     world.altitude[tile] = clamp(altitude, -0.6, 1.1);
     world.humidity[tile] = clamp(0.5 + smoothNoise(rng, x, y, z, wetPhases) * 0.35, 0.1, 0.95);
+    world.baseHumidity[tile] = world.humidity[tile];
     world.temperature[tile] = clamp(baseTemperature(y) - Math.max(0, altitude) * 0.3, 0, 1);
     world.fertility[tile] = 0.2;
     world.vegetation[tile] = altitude > SEA_LEVEL ? 0.05 : 0;

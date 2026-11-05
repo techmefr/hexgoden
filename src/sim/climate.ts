@@ -17,20 +17,20 @@ export const stepClimate = (world: World): void => {
       windward = Math.max(windward, altitude[n] - altitude[tile]);
     }
     const ocean = altitude[tile] < SEA_LEVEL;
-    let h = humidity[tile] + 0.15 * (sumHumidity / around.length - humidity[tile]);
-    if (ocean) h += 0.08 * (0.9 - h);
-    h -= 0.004 * temperature[tile];
-    h += water[tile] * 0.06 * (1 - h);
+    let h = humidity[tile] + 0.06 * (sumHumidity / around.length - humidity[tile]);
+    if (ocean) h += 0.03 * (0.9 - h);
+    h += 0.006 * (world.baseHumidity[tile] - h);
+    h += water[tile] * 0.03 * (1 - h);
     h -= windward > 0.35 ? 0.01 : 0;
     nextHumidity[tile] = clamp(h, 0, 1);
     const latitude = world.grid.centers[tile * 3 + 1];
     const target = baseTemperature(latitude) - Math.max(0, altitude[tile]) * 0.3;
-    nextTemperature[tile] = clamp(temperature[tile] + 0.1 * (sumTemperature / around.length - temperature[tile]) + 0.015 * (target - temperature[tile]), 0, 1);
+    nextTemperature[tile] = clamp(temperature[tile] + 0.04 * (sumTemperature / around.length - temperature[tile]) + 0.003 * (target - temperature[tile]), 0, 1);
   }
   for (let tile = 0; tile < grid.count; tile++) {
     if (altitude[tile] < SEA_LEVEL) { continue; }
     let amount = water[tile];
-    if (nextHumidity[tile] > 0.85) amount += 0.02;
+    if (nextHumidity[tile] > 0.9) amount += 0.02;
     amount -= 0.008 * nextTemperature[tile] + 0.002;
     if (amount <= 0) continue;
     let lowest = tile;

@@ -43,8 +43,8 @@ export const stepEvents = (world: World): void => {
       vegetation[tile] *= 0.85;
       scalePopulations(world, tile, 0.92);
     }
-    const dry = vegetation[tile] > 0.5 && humidity[tile] < 0.25 && temperature[tile] > 0.65;
-    if (dry && burn[tile] === 0 && chance(world.rng, 0.002)) ignite(world, tile);
+    const dry = vegetation[tile] > 0.3 && humidity[tile] < 0.3 && temperature[tile] > 0.6;
+    if (dry && burn[tile] === 0 && chance(world.rng, 0.006)) ignite(world, tile);
   }
   for (const tile of burning) {
     vegetation[tile] = 0;
