@@ -16,3 +16,4 @@ Make the start arid, add a vitality value and stages, grant weather powers per s
 - UI: stage banner with progress bar, power menu grows as stages are reached, i18n keys for stages and powers.
 - Market offers updated: terrain powers leave the market, new weather powers are not offered (earned in run only).
 - Progress save stays version 1 and valid.
+- Tutorial: `src/meta/tutorial.ts` (steps, pure progress logic, persisted in the progress save as an optional field), `src/ui/Tutorial.svelte` hint card with Skip, a Replay button on the start screen.

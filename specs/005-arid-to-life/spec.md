@@ -58,6 +58,20 @@ The Water god acts only on weather. Raising and lowering land move to the future
 
 ---
 
+### User Story 5 - Short tutorial (Priority: P1)
+
+On the first run, a few calm hints guide the player step by step: look at the barren planet, tap a tile, use Rain, watch life appear, see the stage banner, and use a new power when a stage is reached. Hints can be skipped and replayed from the start screen. Nothing blocks the game.
+
+**Independent Test**: a fresh save shows the first hint; following each step advances to the next; skipping marks it done and it is not shown again.
+
+**Acceptance Scenarios**:
+
+1. **Given** a first run, **Then** the first hint is shown and advances when the player does the asked action.
+2. **Given** the tutorial is skipped or finished, **Then** it is not shown again until replayed from the start screen.
+3. **Given** a reload mid-tutorial, **Then** it resumes at the same step.
+
+---
+
 ### Edge Cases
 
 - A planet that loses all life stays at Barren and can restart from rain; nothing is a game over.
@@ -75,6 +89,7 @@ The Water god acts only on weather. Raising and lowering land move to the future
 - **FR-005**: Each stage MUST grant exactly one new weather power for the current run.
 - **FR-006**: New powers (Fog, Storm, Monsoon, Warm Wind) MUST act only on humidity, temperature and seeds of a tile and its neighbours.
 - **FR-007**: Terrain powers MUST be removed from the Water god.
+- **FR-009**: A skippable, replayable tutorial MUST guide the first run and its state MUST persist in local storage.
 - **FR-008**: Species and populations MUST stay read-only for every power.
 
 ### Key Entities
