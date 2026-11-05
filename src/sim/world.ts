@@ -25,6 +25,8 @@ export interface World {
   quake: Uint8Array;
   species: Species[];
   pop: Float32Array;
+  settlement: Float32Array;
+  civilizations: boolean;
   disasters: boolean;
   lastEvent: WorldEvent | null;
 }
@@ -68,6 +70,8 @@ export const createWorld = (seed: number, frequency = GRID_FREQUENCY, arid = fal
     quake: new Uint8Array(grid.count),
     species: ancestors(),
     pop: new Float32Array(grid.count * SPECIES_CAP),
+    settlement: new Float32Array(grid.count),
+    civilizations: false,
     disasters: false,
     lastEvent: null,
   };

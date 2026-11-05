@@ -3,6 +3,7 @@
   import { t, type MessageKey } from "./i18n/en";
   import { buyPower, rentPower, runPowers } from "./meta/market";
 import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from "./meta/tutorial";
+  import { ERAS } from "./sim/civilization";
   import { STAGES, stageIndex } from "./sim/vitality";
   import Tutorial from "./ui/Tutorial.svelte";
   import { addPoints, loadProgress, saveProgress, unlockGod, type Progress } from "./meta/store";
@@ -121,7 +122,7 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
 {:else}
   <div class="stage" data-screen="game">
     <header class="topbar">
-      <div class="title"><h1>{t("planet")}</h1><p>{t(`stage${STAGES[stage].id[0].toUpperCase()}${STAGES[stage].id.slice(1)}` as MessageKey)} · {Math.round(stageProgress * 100)}% · {t("harmony")} {Math.floor(progress.points)}</p><progress max="1" value={stageProgress} aria-label={t("vitality")}></progress></div>
+      <div class="title"><h1>{t("planet")}</h1><p>{t(`stage${STAGES[stage].id[0].toUpperCase()}${STAGES[stage].id.slice(1)}` as MessageKey)} · {Math.round(stageProgress * 100)}% · {t("harmony")} {Math.floor(progress.points)}{#if (snapshot?.era ?? 0) > 0 || (snapshot && snapshot.settlement.some((v) => v > 0.02))} · {t(`era${ERAS[snapshot?.era ?? 0].id[0].toUpperCase()}${ERAS[snapshot?.era ?? 0].id.slice(1)}` as MessageKey)}{/if}</p><progress max="1" value={stageProgress} aria-label={t("vitality")}></progress></div>
       <nav class="examples" aria-label={t("tile")}>
         <button class="btn" type="button" aria-pressed={view === "tile"} onclick={() => (view = "tile")}>{t("tile")}</button>
         <button class="btn" type="button" aria-pressed={view === "species"} onclick={() => (view = "species")}>{t("species")}</button>

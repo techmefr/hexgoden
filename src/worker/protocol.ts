@@ -20,6 +20,8 @@ export interface Snapshot {
   tick: number;
   points: number;
   vitality: number;
+  settlement: Float32Array;
+  era: number;
   event: WorldEvent | null;
   altitude: Float32Array;
   humidity: Float32Array;

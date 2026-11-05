@@ -1,3 +1,4 @@
+import { civilizationPoints } from './civilization';
 import { speciesTotal } from './life';
 import type { World } from './world';
 
@@ -9,5 +10,5 @@ export const tickPoints = (world: World): number => {
   for (const s of world.species) if (speciesTotal(world, s.id) > 0.5) living++;
   let vegetated = 0;
   for (let tile = 0; tile < world.grid.count; tile++) if (world.vegetation[tile] > 0.3) vegetated++;
-  return living * SPECIES_POINTS + vegetated * VEGETATION_POINTS;
+  return living * SPECIES_POINTS + vegetated * VEGETATION_POINTS + civilizationPoints(world);
 };
