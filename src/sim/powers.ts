@@ -1,8 +1,8 @@
 import { clamp } from './rng';
 import type { World } from './world';
 
-export type Power = 'rain' | 'sun' | 'raise' | 'lower';
-export const POWERS: Power[] = ['rain', 'sun', 'raise', 'lower'];
+export type Power = 'rain' | 'sun' | 'raise' | 'lower' | 'gust' | 'chill';
+export const POWERS: Power[] = ['rain', 'sun', 'raise', 'lower', 'gust', 'chill'];
 
 const touch = (world: World, tile: number, apply: (target: number, weight: number) => void): void => {
   apply(tile, 1);
@@ -31,6 +31,23 @@ export const applyPower = (world: World, tile: number, power: Power): void => {
       touch(world, tile, (t, w) => {
         altitude[t] = clamp(altitude[t] + 0.14 * w, -0.6, 1.1);
         tension[t] = clamp(tension[t] + 0.3 * w, 0, 1);
+      });
+      break;
+    case 'gust': {
+      const group = [tile, ...world.grid.neighbors[tile]];
+      const meanHumidity = group.reduce((sum, t) => sum + humidity[t], 0) / group.length;
+      const meanTemperature = group.reduce((sum, t) => sum + temperature[t], 0) / group.length;
+      for (const t of group) {
+        humidity[t] += (meanHumidity - humidity[t]) * 0.7;
+        temperature[t] += (meanTemperature - temperature[t]) * 0.7;
+        for (const n of world.grid.neighbors[t]) world.vegetation[n] = clamp(world.vegetation[n] + 0.04 * world.vegetation[t], 0, 1);
+      }
+      break;
+    }
+    case 'chill':
+      touch(world, tile, (t, w) => {
+        temperature[t] = clamp(temperature[t] - 0.22 * w, 0, 1);
+        humidity[t] = clamp(humidity[t] + 0.04 * w, 0, 1);
       });
       break;
     case 'lower':

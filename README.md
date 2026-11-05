@@ -11,6 +11,7 @@ Play: https://techmefr.github.io/hexgoden/ · Design mockups: https://techmefr.g
 - Biomes emerge from altitude, humidity and temperature. Water flows downhill.
 - Raising land builds tension and causes earthquakes; dry forests can burn and slowly regrow; floods drown low ground. Nothing ends the run.
 - Herbivores, predators and flies live on per-tile populations, spread, mutate and split into new species that keep their lineage.
+- Harmony points are earned from living species and vegetated land, saved on the device, and spent to unlock the Wind god (Gust and Chill). Stone is listed and still locked.
 - The simulation is pure TypeScript running in a Web Worker and is deterministic for a given seed.
 
 ## Develop

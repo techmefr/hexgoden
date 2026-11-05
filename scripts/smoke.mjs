@@ -33,5 +33,20 @@ for (const [name, w, h] of [["mobile", 390, 844], ["desktop", 1440, 900]]) {
   check(errors.length === 0, `${name}: no console errors ${errors.slice(0, 2).join(" | ")}`);
   await page.close();
 }
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.addInitScript(() => localStorage.setItem("hexgoden.progress", JSON.stringify({ version: 1, points: 200, unlocked: ["water"] })));
+  await page.goto(url);
+  await page.getByRole("button", { name: /Unlock/ }).click();
+  check((await page.locator("text=Wind >> visible=true").count()) > 0, "progression: wind unlocked with points");
+  await page.getByRole("button", { name: /^Wind/ }).click();
+  await page.getByRole("button", { name: "Begin" }).click();
+  await page.waitForSelector("canvas");
+  check((await page.locator("text=Gust >> visible=true").count()) > 0, "progression: wind run offers Gust");
+  check((await page.locator("text=Rain >> visible=true").count()) === 0, "progression: wind run hides water powers");
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("hexgoden.progress")));
+  check(saved.unlocked.includes("wind") && saved.points >= 50, "progression: unlock persisted and points spent");
+  await page.close();
+}
 await browser.close();
 process.exit(failed ? 1 : 0);

@@ -1,3 +1,4 @@
+import type { GodId } from '../sim/gods';
 import type { Power } from '../sim/powers';
 
 export interface SpeciesInfo {
@@ -16,6 +17,7 @@ export interface SpeciesInfo {
 
 export interface Snapshot {
   tick: number;
+  points: number;
   altitude: Float32Array;
   humidity: Float32Array;
   temperature: Float32Array;
@@ -32,7 +34,7 @@ export interface Snapshot {
 }
 
 export type ToWorker =
-  | { type: 'init'; seed: number }
+  | { type: 'init'; seed: number; god: GodId }
   | { type: 'power'; tile: number; power: Power }
   | { type: 'visible'; visible: boolean };
 
