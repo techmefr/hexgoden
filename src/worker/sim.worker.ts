@@ -1,5 +1,4 @@
-import { godById, type GodId } from '../sim/gods';
-import { applyPower } from '../sim/powers';
+import { applyPower, type Power } from '../sim/powers';
 import { tickPoints } from '../sim/score';
 import { step } from '../sim/tick';
 import { newWorld } from '../sim/start';
@@ -13,7 +12,7 @@ const TREND_EVERY = 20;
 let world: World | null = null;
 let timer: ReturnType<typeof setInterval> | null = null;
 let previous = new Map<number, number>();
-let god: GodId = 'water';
+let allowed: Power[] = [];
 let points = 0;
 
 const post = (snapshot: Snapshot): void => {
@@ -46,12 +45,12 @@ self.onmessage = (event: MessageEvent<ToWorker>): void => {
   const message = event.data;
   if (message.type === 'init') {
     world = newWorld(message.seed);
-    god = message.god;
+    allowed = message.powers;
     points = 0;
     previous = new Map();
     publish();
     start();
-  } else if (message.type === 'power' && world && godById(god).powers.includes(message.power)) {
+  } else if (message.type === 'power' && world && allowed.includes(message.power)) {
     applyPower(world, message.tile, message.power);
     publish();
   } else if (message.type === 'visible') {
