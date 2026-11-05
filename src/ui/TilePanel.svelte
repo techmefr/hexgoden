@@ -19,5 +19,6 @@
   <dt><Icon name="thermo" />{t("temperature")}</dt><dd>{Math.round(snapshot.temperature[tile] * 70 - 30)} °C</dd>
   <dt><Icon name="bolt" />{t("tension")}</dt><dd>{level(snapshot.tension[tile])} ({snapshot.tension[tile].toFixed(2)})</dd>
   <dt><Icon name="fly" />{t("life")}</dt><dd>{life}</dd>
+  <dt><Icon name="home" />{t("people")}</dt><dd>{snapshot.settlement[tile] > 0.02 ? Math.round(snapshot.settlement[tile] * 100) + "%" : t("none")}</dd>
 </dl>
 <p class="note">{t("scales")}</p>

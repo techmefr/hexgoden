@@ -33,6 +33,7 @@ export const ring = (world: World, tile: number, radius: number): number[] => {
 
 const scale = (world: World, tile: number, factor: number): void => {
   for (let s = 0; s < SPECIES_CAP; s++) world.pop[tile * SPECIES_CAP + s] *= factor;
+  world.settlement[tile] *= Math.min(1, factor * 1.5);
 };
 
 const meteorite = (world: World, tile: number): void => {

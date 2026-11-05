@@ -1,4 +1,5 @@
 import { biomeIndex, biomeOf } from '../sim/terrain';
+import { eraIndex, settlementMass } from '../sim/civilization';
 import { vitality } from '../sim/vitality';
 import { speciesTotal } from '../sim/life';
 import { SPECIES_CAP, type World } from '../sim/world';
@@ -28,6 +29,8 @@ export const makeSnapshot = (world: World, previous: Map<number, number>, points
     tick: world.tick,
     points,
     vitality: vitality(world),
+    settlement: world.settlement.slice(),
+    era: eraIndex(settlementMass(world)),
     event: world.lastEvent,
     altitude: world.altitude.slice(),
     humidity: world.humidity.slice(),

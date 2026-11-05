@@ -33,7 +33,7 @@ export const updateGeometry = (geometry: BufferGeometry, grid: Grid, snapshot: S
   };
   for (let tile = 0; tile < grid.count; tile++) {
     const r = tileRadius(snapshot.altitude[tile]);
-    tileColor(top, snapshot.biome[tile], tile, snapshot.altitude[tile], snapshot.ash[tile], snapshot.burn[tile], snapshot.tension[tile]);
+    tileColor(top, snapshot.biome[tile], tile, snapshot.altitude[tile], snapshot.ash[tile], snapshot.burn[tile], snapshot.tension[tile], snapshot.settlement[tile]);
     side.copy(top).multiplyScalar(0.72);
     const cx = grid.centers[tile * 3] * r;
     const cy = grid.centers[tile * 3 + 1] * r;

@@ -20,7 +20,7 @@ const post = (snapshot: Snapshot): void => {
   (self as unknown as Worker).postMessage(message, [
     snapshot.altitude.buffer, snapshot.humidity.buffer, snapshot.temperature.buffer, snapshot.water.buffer,
     snapshot.tension.buffer, snapshot.vegetation.buffer, snapshot.burn.buffer, snapshot.ash.buffer,
-    snapshot.quake.buffer, snapshot.biome.buffer, snapshot.dominant.buffer, snapshot.dominantPop.buffer,
+    snapshot.quake.buffer, snapshot.biome.buffer, snapshot.dominant.buffer, snapshot.dominantPop.buffer, snapshot.settlement.buffer,
   ]);
 };
 
