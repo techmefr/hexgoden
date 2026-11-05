@@ -1,3 +1,4 @@
+import type { WorldEvent } from './disasters';
 import { buildGrid, type Grid } from './grid';
 import { clamp, nextRange, type Rng } from './rng';
 import { ancestors, type Species } from './species';
@@ -24,6 +25,8 @@ export interface World {
   quake: Uint8Array;
   species: Species[];
   pop: Float32Array;
+  disasters: boolean;
+  lastEvent: WorldEvent | null;
 }
 
 export const baseTemperature = (y: number): number => 0.92 - 0.85 * Math.abs(y) ** 1.4;
@@ -65,6 +68,8 @@ export const createWorld = (seed: number, frequency = GRID_FREQUENCY, arid = fal
     quake: new Uint8Array(grid.count),
     species: ancestors(),
     pop: new Float32Array(grid.count * SPECIES_CAP),
+    disasters: false,
+    lastEvent: null,
   };
   for (let tile = 0; tile < grid.count; tile++) {
     const x = grid.centers[tile * 3];

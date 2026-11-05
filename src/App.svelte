@@ -25,6 +25,9 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
   let active = $state<Power | null>("rain");
   let banked = 0;
   let stageReached = $state(0);
+  let notice = $state("");
+  let lastEventTick = -1;
+  let noticeTimer: ReturnType<typeof setTimeout> | null = null;
   const stage = $derived(stageIndex(snapshot?.vitality ?? 0));
   const nextFrom = $derived(STAGES[stage + 1]?.from ?? 1);
   const stageProgress = $derived(stage + 1 < STAGES.length ? Math.min(1, Math.max(0, ((snapshot?.vitality ?? 0) - STAGES[stage].from) / (nextFrom - STAGES[stage].from))) : 1);
@@ -55,6 +58,13 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
       for (const s of next.species) map.set(s.id, [...(map.get(s.id) ?? []), s.total].slice(-24));
       history = map;
     }
+    if (next.event && next.event.tick !== lastEventTick) {
+      lastEventTick = next.event.tick;
+      const key = `event${next.event.kind[0].toUpperCase()}${next.event.kind.slice(1)}` as MessageKey;
+      notice = t(key);
+      if (noticeTimer) clearTimeout(noticeTimer);
+      noticeTimer = setTimeout(() => (notice = ""), 7000);
+    }
     const reached = stageIndex(next.vitality);
     if (reached > stageReached) {
       stageReached = reached;
@@ -68,6 +78,8 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
   const begin = (seed: number, chosen: GodId): void => {
     god = chosen;
     stageReached = 0;
+    lastEventTick = -1;
+    notice = "";
     powers = runPowers(progress, chosen, Date.now(), 0);
     active = powers[0] ?? null;
     banked = 0;
@@ -121,6 +133,7 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
       <section class="sheet" aria-label={t(view)}><span class="grip" aria-hidden="true"></span>{@render details(snapshot)}</section>
       <aside class="panel" aria-label={t(view)}>{@render details(snapshot)}</aside>
     {/if}
+    {#if notice}<div class="hint-layer notice-layer"><p class="card notice" role="alert">{notice}</p></div>{/if}
     {#if tutorialActive(progress)}<div class="hint-layer"><Tutorial step={progress.tutorial} onnext={() => step(progress.tutorial)} onskip={() => commit(skipTutorial(progress))} /></div>{/if}
     <nav class="dock" aria-label={t("powers")}><PowerList {powers} {active} onpick={pick} /></nav>
   </div>
