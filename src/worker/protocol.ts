@@ -34,7 +34,7 @@ export interface Snapshot {
 }
 
 export type ToWorker =
-  | { type: 'init'; seed: number; god: GodId }
+  | { type: 'init'; seed: number; powers: Power[] }
   | { type: 'power'; tile: number; power: Power }
   | { type: 'visible'; visible: boolean };
 

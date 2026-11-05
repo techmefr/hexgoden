@@ -8,4 +8,4 @@
 - [x] T006 [US2] Power bar per god, i18n messages
 - [x] T007 Smoke test update, README, PR, merge, verify live
 - [x] T008 [US3] Ranking of gods (solo, lifetime points, tiers)
-- [ ] T009 [US4] Team and bought powers (later)
+- [x] T009 [US4] Buy or rent other gods powers from a power menu

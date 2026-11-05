@@ -2,10 +2,12 @@
   import { t } from "../i18n/en";
   import { canUnlock, missingPoints, type Progress } from "../meta/store";
   import { GODS, type GodId } from "../sim/gods";
+  import type { Power } from "../sim/powers";
+  import MarketPanel from "./MarketPanel.svelte";
   import Icon from "./Icon.svelte";
   import RankingPanel from "./RankingPanel.svelte";
 
-  let { progress, onbegin, onunlock }: { progress: Progress; onbegin: (seed: number, god: GodId) => void; onunlock: (god: GodId) => void } = $props();
+  let { progress, onbegin, onunlock, onbuy, onrent }: { progress: Progress; onbegin: (seed: number, god: GodId) => void; onunlock: (god: GodId) => void; onbuy: (power: Power) => void; onrent: (power: Power) => void } = $props();
   let seedText = $state(String(Math.floor(100000 + Math.random() * 900000)));
   let chosen = $state<GodId>("water");
   const seed = $derived(Number.parseInt(seedText, 10) || 1);
@@ -40,5 +42,7 @@
   </div>
   <button class="btn primary" type="submit">{t("begin")}</button>
 </form>
+
+<MarketPanel {progress} {onbuy} {onrent} />
 
 <RankingPanel earned={progress.earned} />

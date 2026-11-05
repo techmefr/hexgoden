@@ -38,6 +38,7 @@ for (const [name, w, h] of [["mobile", 390, 844], ["desktop", 1440, 900]]) {
   await page.addInitScript(() => localStorage.setItem("hexgoden.progress", JSON.stringify({ version: 1, points: 200, unlocked: ["water"] })));
   await page.goto(url);
   check((await page.locator("text=Ranking >> visible=true").count()) > 0, "ranking: panel shown on the start screen");
+  check((await page.getByRole("button", { name: /^Rent/ }).count()) > 0, "market: rent offers shown for a reachable rank");
   await page.getByRole("button", { name: /Unlock/ }).click();
   check((await page.locator("text=Wind >> visible=true").count()) > 0, "progression: wind unlocked with points");
   await page.getByRole("button", { name: /^Wind/ }).click();

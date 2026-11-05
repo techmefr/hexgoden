@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { t } from "./i18n/en";
-  import { addPoints, loadProgress, saveProgress, unlockGod, type Progress } from "./meta/store";
+  import { buyPower, rentPower, runPowers } from "./meta/market";
+import { addPoints, loadProgress, saveProgress, unlockGod, type Progress } from "./meta/store";
   import { PlanetView } from "./render/planet-view";
-  import { godById, type GodId } from "./sim/gods";
+  import { type GodId } from "./sim/gods";
   import { buildGrid } from "./sim/grid";
   import type { Power } from "./sim/powers";
   import { GRID_FREQUENCY } from "./sim/world";
@@ -32,7 +33,7 @@
   let planet: PlanetView | null = null;
   const grid = buildGrid(GRID_FREQUENCY);
 
-  const powers = $derived(godById(god).powers);
+  let powers = $state<Power[]>([]);
 
   const commit = (next: Progress): void => { progress = next; saveProgress(storage(), next); };
 
@@ -51,7 +52,8 @@
 
   const begin = (seed: number, chosen: GodId): void => {
     god = chosen;
-    active = godById(chosen).powers[0] ?? null;
+    powers = runPowers(progress, chosen, Date.now());
+    active = powers[0] ?? null;
     banked = 0;
     playing = true;
     queueMicrotask(() => {
@@ -64,7 +66,7 @@
       });
       worker = new Worker(new URL("./worker/sim.worker.ts", import.meta.url), { type: "module" });
       worker.onmessage = (event: MessageEvent<FromWorker>) => onSnapshot(event.data.snapshot);
-      worker.postMessage({ type: "init", seed, god: chosen } satisfies ToWorker);
+      worker.postMessage({ type: "init", seed, powers: [...powers] } satisfies ToWorker);
     });
   };
 
@@ -86,7 +88,7 @@
 {/snippet}
 
 {#if !playing}
-  <div class="start"><StartScreen {progress} onbegin={begin} onunlock={(id) => commit(unlockGod(progress, id))} /></div>
+  <div class="start"><StartScreen {progress} onbegin={begin} onunlock={(id) => commit(unlockGod(progress, id))} onbuy={(power) => commit(buyPower(progress, power, Date.now()))} onrent={(power) => commit(rentPower(progress, power, Date.now()))} /></div>
 {:else}
   <div class="stage" data-screen="game">
     <header class="topbar">
