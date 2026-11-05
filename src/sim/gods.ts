@@ -10,9 +10,9 @@ export interface God {
 }
 
 export const GODS: God[] = [
-  { id: 'water', powers: ['rain', 'sun', 'raise', 'lower'], price: 0, playable: true },
+  { id: 'water', powers: ['rain', 'sun'], price: 0, playable: true },
   { id: 'wind', powers: ['gust', 'chill'], price: 150, playable: true },
-  { id: 'stone', powers: [], price: 400, playable: false },
+  { id: 'stone', powers: ['raise', 'lower'], price: 400, playable: false },
 ];
 
 export const godById = (id: GodId): God => GODS.find((god) => god.id === id) ?? GODS[0];

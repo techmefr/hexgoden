@@ -44,12 +44,14 @@ const start = (): void => {
 self.onmessage = (event: MessageEvent<ToWorker>): void => {
   const message = event.data;
   if (message.type === 'init') {
-    world = newWorld(message.seed);
+    world = newWorld(message.seed, true);
     allowed = message.powers;
     points = 0;
     previous = new Map();
     publish();
     start();
+  } else if (message.type === 'powers') {
+    allowed = message.powers;
   } else if (message.type === 'power' && world && allowed.includes(message.power)) {
     applyPower(world, message.tile, message.power);
     publish();

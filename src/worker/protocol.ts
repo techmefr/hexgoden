@@ -18,6 +18,7 @@ export interface SpeciesInfo {
 export interface Snapshot {
   tick: number;
   points: number;
+  vitality: number;
   altitude: Float32Array;
   humidity: Float32Array;
   temperature: Float32Array;
@@ -35,6 +36,7 @@ export interface Snapshot {
 
 export type ToWorker =
   | { type: 'init'; seed: number; powers: Power[] }
+  | { type: 'powers'; powers: Power[] }
   | { type: 'power'; tile: number; power: Power }
   | { type: 'visible'; visible: boolean };
 

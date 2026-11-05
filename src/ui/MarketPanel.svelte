@@ -7,7 +7,7 @@
 
   let { progress, onbuy, onrent }: { progress: Progress; onbuy: (power: Power) => void; onrent: (power: Power) => void } = $props();
 
-  const ICONS: Record<Power, string> = { rain: "drop", sun: "sun", raise: "up", lower: "down", gust: "wind", chill: "thermo" };
+  const ICONS: Record<Power, string> = { rain: "drop", sun: "sun", raise: "up", lower: "down", gust: "wind", chill: "thermo", fog: "wave", storm: "bolt", monsoon: "leaf", warmwind: "flame" };
   const now = Date.now();
 </script>
 
