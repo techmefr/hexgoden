@@ -1,26 +1,21 @@
 <script lang="ts">
-  import { t } from "../i18n/en";
+  import { t, type MessageKey } from "../i18n/en";
   import type { Power } from "../sim/powers";
   import Icon from "./Icon.svelte";
 
-  let { active, onpick }: { active: Power | null; onpick: (power: Power) => void } = $props();
+  let { powers, active, onpick }: { powers: Power[]; active: Power | null; onpick: (power: Power) => void } = $props();
 
-  const POWERS: { id: Power; icon: string; label: "rain" | "sun" | "raise" | "lower"; hint: "rainHint" | "sunHint" | "raiseHint" | "lowerHint" }[] = [
-    { id: "rain", icon: "drop", label: "rain", hint: "rainHint" },
-    { id: "sun", icon: "sun", label: "sun", hint: "sunHint" },
-    { id: "raise", icon: "up", label: "raise", hint: "raiseHint" },
-    { id: "lower", icon: "down", label: "lower", hint: "lowerHint" },
-  ];
+  const ICONS: Record<Power, string> = { rain: "drop", sun: "sun", raise: "up", lower: "down", gust: "wind", chill: "thermo" };
 </script>
 
 <ul class="powers" aria-label={t("powers")}>
-  {#each POWERS as power (power.id)}
+  {#each powers as power (power)}
     <li>
-      <button class="btn" type="button" aria-pressed={active === power.id} onclick={() => onpick(power.id)}>
-        <Icon name={power.icon} />
-        <span>{t(power.label)}</span>
-        {#if active === power.id}<Icon name="check" cls="icon check" />{/if}
-        <span class="hint">{t(power.hint)}</span>
+      <button class="btn" type="button" aria-pressed={active === power} onclick={() => onpick(power)}>
+        <Icon name={ICONS[power]} />
+        <span>{t(power)}</span>
+        {#if active === power}<Icon name="check" cls="icon check" />{/if}
+        <span class="hint">{t(`${power}Hint` as MessageKey)}</span>
       </button>
     </li>
   {/each}

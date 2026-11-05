@@ -3,7 +3,7 @@ import { speciesTotal } from '../sim/life';
 import { SPECIES_CAP, type World } from '../sim/world';
 import type { Snapshot, SpeciesInfo } from './protocol';
 
-export const makeSnapshot = (world: World, previous: Map<number, number>): Snapshot => {
+export const makeSnapshot = (world: World, previous: Map<number, number>, points: number): Snapshot => {
   const count = world.grid.count;
   const biome = new Uint8Array(count);
   const dominant = new Int16Array(count).fill(-1);
@@ -25,6 +25,7 @@ export const makeSnapshot = (world: World, previous: Map<number, number>): Snaps
     .filter((s) => s.total > 0.3);
   return {
     tick: world.tick,
+    points,
     altitude: world.altitude.slice(),
     humidity: world.humidity.slice(),
     temperature: world.temperature.slice(),
