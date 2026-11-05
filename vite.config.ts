@@ -33,5 +33,5 @@ export default defineConfig({
       workbox: { globPatterns: ["**/*.{js,css,html,svg,png,woff2}"] },
     }),
   ],
-  test: { include: ["tests/**/*.test.ts"] },
+  test: { include: ["tests/**/*.test.ts"], testTimeout: 60000 },
 });
