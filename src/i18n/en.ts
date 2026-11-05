@@ -107,6 +107,8 @@ export const en = {
   water: "Water",
   wind: "Wind",
   stone: "Stone",
+  time: "Time",
+  speed: "Speed",
   available: "Available",
   locked: "Locked",
   seed: "Seed",

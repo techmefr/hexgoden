@@ -15,6 +15,7 @@ export const SYMBOLS: Record<string, string> = {
   grid: '<path d="M12 3l7 4v8l-7 4-7-4V7z"/>',
   arrow: '<path d="M4 12h14M13 6l6 6-6 6"/>',
   home: '<path d="M4 11l8-7 8 7v9H4z"/>',
+  clock: '<circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/>',
   wind: '<path d="M3 9h11a3 3 0 1 0-3-3M3 15h15a3 3 0 1 1-3 3"/>',
   stone: '<path d="M4 18l3-9 6-3 6 5-2 7z"/>',
   fly: '<ellipse cx="12" cy="14" rx="3" ry="4"/><ellipse cx="7" cy="9" rx="4" ry="2"/><ellipse cx="17" cy="9" rx="4" ry="2"/>',
