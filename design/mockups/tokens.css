@@ -1,0 +1,105 @@
+:root {
+  --space: #0e1026;
+  --space-deep: #090b1c;
+  --star: #c4cdde;
+  --surface: #191d36;
+  --surface-raised: #252b47;
+  --surface-sunken: #12152b;
+  --border: #6f7aa3;
+  --border-soft: #3a4166;
+  --text: #f2f4fa;
+  --text-muted: #c4cdde;
+  --text-disabled: #9aa4c0;
+  --accent: #7ccfc3;
+  --accent-ink: #102d32;
+  --accent-soft: #1f4a52;
+  --focus: #e8ddaa;
+
+  --ocean: #7ec9e6;
+  --ocean-deep: #5aa9d0;
+  --desert: #eaddbe;
+  --grassland: #a8d6a7;
+  --forest: #7fbfa8;
+  --jungle: #83b69b;
+  --swamp: #a6b895;
+  --tundra: #bac8c4;
+  --ice: #ddebfb;
+  --mountain: #c8b6e6;
+  --pine: #3f7f6b;
+  --pine-dark: #2f6554;
+  --peak: #f2ecff;
+  --facet-light: #ffffff;
+  --facet-dark: #1a1f45;
+  --tile-line: #0e1026;
+  --tile-select: #ffffff;
+
+  --ocean-1: var(--ocean);
+  --ocean-2: color-mix(in srgb, var(--ocean) 90%, var(--facet-light));
+  --ocean-3: color-mix(in srgb, var(--ocean) 90%, var(--ocean-deep));
+  --desert-1: var(--desert);
+  --desert-2: color-mix(in srgb, var(--desert) 90%, var(--facet-light));
+  --desert-3: color-mix(in srgb, var(--desert) 90%, var(--facet-dark));
+  --grassland-1: var(--grassland);
+  --grassland-2: color-mix(in srgb, var(--grassland) 90%, var(--facet-light));
+  --grassland-3: color-mix(in srgb, var(--grassland) 90%, var(--facet-dark));
+  --forest-1: var(--forest);
+  --forest-2: color-mix(in srgb, var(--forest) 90%, var(--facet-light));
+  --forest-3: color-mix(in srgb, var(--forest) 90%, var(--facet-dark));
+  --jungle-1: var(--jungle);
+  --jungle-2: color-mix(in srgb, var(--jungle) 90%, var(--facet-light));
+  --jungle-3: color-mix(in srgb, var(--jungle) 90%, var(--facet-dark));
+  --swamp-1: var(--swamp);
+  --swamp-2: color-mix(in srgb, var(--swamp) 90%, var(--facet-light));
+  --swamp-3: color-mix(in srgb, var(--swamp) 90%, var(--facet-dark));
+  --tundra-1: var(--tundra);
+  --tundra-2: color-mix(in srgb, var(--tundra) 90%, var(--facet-light));
+  --tundra-3: color-mix(in srgb, var(--tundra) 90%, var(--facet-dark));
+  --ice-1: var(--ice);
+  --ice-2: color-mix(in srgb, var(--ice) 90%, var(--facet-light));
+  --ice-3: color-mix(in srgb, var(--ice) 90%, var(--ocean));
+  --mountain-1: var(--mountain);
+  --mountain-2: color-mix(in srgb, var(--mountain) 90%, var(--facet-light));
+  --mountain-3: color-mix(in srgb, var(--mountain) 90%, var(--facet-dark));
+
+  --warn-ink: #ffd9a8;
+  --warn-surface: #3a2a2e;
+  --warn-border: #ffb86b;
+  --fault: #3a2420;
+  --fault-glow: #ffb86b;
+  --fire: #ff9a5c;
+  --fire-core: #ffe08a;
+  --ash: #5b5568;
+  --flood: #4f9fcf;
+  --flood-line: #d6f0ff;
+  --life-ink: #bfe8c0;
+  --fly: #e9e3f8;
+
+  --shadow: 0 8px 24px rgb(5 6 18 / 45%);
+  --shadow-soft: 0 2px 8px rgb(5 6 18 / 35%);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-s: 12px;
+  --radius-m: 20px;
+  --radius-l: 28px;
+
+  --font-ui: "Nunito", "Quicksand", "Varela Round", ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-12: 0.75rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-20: 1.25rem;
+  --fs-28: 1.75rem;
+  --fs-40: 2.5rem;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  --target: 44px;
+  --bp-desktop: 960px;
+}

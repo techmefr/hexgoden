@@ -1,0 +1,38 @@
+import { writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { SCREENS } from './pages.mjs';
+
+const out = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'design', 'mockups');
+
+for (const [file, , render] of SCREENS) writeFileSync(join(out, `${file}.html`), render());
+
+const links = SCREENS.map(([file, name]) => `<li><a class="btn" href="${file}.html">${file.slice(0, 2)}. ${name}</a></li>`).join('\n');
+writeFileSync(join(out, 'index.html'), `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HexGoden mockups</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="shared.css">
+<style>
+.gallery { max-width: 960px; margin: 0 auto; padding: var(--space-5) var(--space-4); display: grid; gap: var(--space-5); }
+.gallery ul { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 0; padding: 0; list-style: none; }
+.gallery img { width: 100%; height: auto; border-radius: var(--radius-m); border: 1px solid var(--border-soft); }
+.gallery p { color: var(--text-muted); }
+</style>
+</head>
+<body>
+<main class="gallery">
+<h1>HexGoden mockups</h1>
+<p>Seven static screens for a zen low-poly water god game. Each screen adapts from phone to desktop.</p>
+<nav aria-label="Screens"><ul>
+${links}
+</ul></nav>
+<figure><img src="reference.png" alt="Reference board with the seven screens and the colour palette" width="1672" height="941"><figcaption><p>Reference board: the initial direction, corrected in these screens.</p></figcaption></figure>
+</main>
+</body>
+</html>
+`);
+console.log(`wrote ${SCREENS.length + 1} files`);
