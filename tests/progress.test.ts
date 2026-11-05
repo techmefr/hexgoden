@@ -34,8 +34,9 @@ describe('unlocks', () => {
     expect(unlocked.unlocked).toContain('wind');
     expect(unlockGod(unlocked, 'wind')).toBe(unlocked);
   });
-  it('keeps stone locked', () => {
-    expect(canUnlock(addPoints(freshProgress(), 9999), 'stone')).toBe(false);
+  it('keeps stone locked until its price is reached', () => {
+    expect(canUnlock(addPoints(freshProgress(), 399), 'stone')).toBe(false);
+    expect(canUnlock(addPoints(freshProgress(), 400), 'stone')).toBe(true);
   });
   it('ignores negative gains', () => {
     const progress = freshProgress();

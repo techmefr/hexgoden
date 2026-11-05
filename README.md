@@ -22,10 +22,11 @@ Responsive, installable as a PWA and playable offline. No account, no server, pr
 | Mockup gallery | 002 | done |
 | Points, Wind god, ranking, power market | 003 | done |
 | Simulation balance | 004 | done |
-| From desert to life: arid start, vitality stages, powers earned per stage, tutorial | 005 | specified |
-| Random events: meteorites, drought, volcano, ice age | 006 | planned |
-| Civilizations that emerge and grow | 007 | planned |
-| Stone god, time god, space map | later | planned |
+| From desert to life: arid start, vitality stages, powers earned per stage, tutorial | 005 | done |
+| Random events: meteorite, drought, flood, volcano, cold snap | 006 | done |
+| Civilizations that emerge, grow and fade | 007 | done |
+| Stone god (raise and lower land) | 008 | done |
+| Time god, space map | later | planned |
 
 ## Develop
 

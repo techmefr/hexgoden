@@ -42,3 +42,12 @@ describe("market", () => {
     expect(old.rentals).toEqual({});
   });
 });
+
+describe("stone market", () => {
+  it("offers terrain powers only from river rank", () => {
+    const lowRank = addPoints(freshProgress(), 200);
+    expect(rentPower(lowRank, "raise", NOW)).toBe(lowRank);
+    const river = rentPower(addPoints(freshProgress(), 800), "raise", NOW);
+    expect(runPowers(river, "water", NOW + 1)).toContain("raise");
+  });
+});

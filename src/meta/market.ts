@@ -17,6 +17,8 @@ export interface Offer {
 export const OFFERS: Offer[] = [
   { power: "gust", god: "wind", tier: "wisp", buy: 120, rent: 30 },
   { power: "chill", god: "wind", tier: "wisp", buy: 100, rent: 25 },
+  { power: "raise", god: "stone", tier: "river", buy: 300, rent: 60 },
+  { power: "lower", god: "stone", tier: "river", buy: 300, rent: 60 },
   { power: "rain", god: "water", tier: "spring", buy: 200, rent: 40 },
   { power: "sun", god: "water", tier: "spring", buy: 200, rent: 40 },
 ];
