@@ -15,4 +15,4 @@
 - [x] T013 [US6] PWA manifest, icons and offline caching
 - [x] T014 Playwright smoke test (load, select tile, apply a power) and 390 and 1440 px checks
 - [x] T015 Pages workflow: build the game, include the mockups under `/mockups/`
-- [ ] T016 README, PR, merge, verify live
+- [x] T016 README, PR, merge, verify live
