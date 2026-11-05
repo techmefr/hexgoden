@@ -1,3 +1,4 @@
+import type { WorldEvent } from '../sim/disasters';
 import type { GodId } from '../sim/gods';
 import type { Power } from '../sim/powers';
 
@@ -19,6 +20,7 @@ export interface Snapshot {
   tick: number;
   points: number;
   vitality: number;
+  event: WorldEvent | null;
   altitude: Float32Array;
   humidity: Float32Array;
   temperature: Float32Array;

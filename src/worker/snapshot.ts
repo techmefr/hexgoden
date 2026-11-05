@@ -28,6 +28,7 @@ export const makeSnapshot = (world: World, previous: Map<number, number>, points
     tick: world.tick,
     points,
     vitality: vitality(world),
+    event: world.lastEvent,
     altitude: world.altitude.slice(),
     humidity: world.humidity.slice(),
     temperature: world.temperature.slice(),
