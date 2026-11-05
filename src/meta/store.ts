@@ -1,5 +1,5 @@
 import { godById, type GodId } from '../sim/gods';
-import type { Power } from '../sim/powers';
+import { POWERS, type Power } from '../sim/powers';
 
 export interface Progress {
   version: 1;
@@ -8,6 +8,7 @@ export interface Progress {
   unlocked: GodId[];
   owned: Power[];
   rentals: Partial<Record<Power, number>>;
+  tutorial: number;
 }
 
 export interface KeyValueStorage {
@@ -17,9 +18,7 @@ export interface KeyValueStorage {
 
 export const STORAGE_KEY = 'hexgoden.progress';
 
-export const freshProgress = (): Progress => ({ version: 1, points: 0, earned: 0, unlocked: ['water'], owned: [], rentals: {} });
-
-const POWERS: Power[] = ['rain', 'sun', 'raise', 'lower', 'gust', 'chill'];
+export const freshProgress = (): Progress => ({ version: 1, points: 0, earned: 0, unlocked: ['water'], owned: [], rentals: {}, tutorial: 0 });
 
 const isPower = (value: unknown): value is Power => POWERS.includes(value as Power);
 
@@ -36,7 +35,8 @@ export const parseProgress = (raw: string | null): Progress => {
     const owned = Array.isArray(data.owned) ? [...new Set(data.owned.filter(isPower))] : [];
     const rentals: Progress['rentals'] = {};
     for (const [power, until] of Object.entries(data.rentals ?? {})) if (isPower(power) && typeof until === 'number' && Number.isFinite(until)) rentals[power] = until;
-    return { version: 1, points: data.points as number, earned, unlocked, owned, rentals };
+    const tutorial = typeof data.tutorial === 'number' && Number.isInteger(data.tutorial) && data.tutorial >= 0 ? data.tutorial : 0;
+    return { version: 1, points: data.points as number, earned, unlocked, owned, rentals, tutorial };
   } catch {
     return freshProgress();
   }

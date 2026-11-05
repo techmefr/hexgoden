@@ -5,7 +5,7 @@
 
   let { powers, active, onpick }: { powers: Power[]; active: Power | null; onpick: (power: Power) => void } = $props();
 
-  const ICONS: Record<Power, string> = { rain: "drop", sun: "sun", raise: "up", lower: "down", gust: "wind", chill: "thermo" };
+  const ICONS: Record<Power, string> = { rain: "drop", sun: "sun", raise: "up", lower: "down", gust: "wind", chill: "thermo", fog: "wave", storm: "bolt", monsoon: "leaf", warmwind: "flame" };
 </script>
 
 <ul class="powers" aria-label={t("powers")}>

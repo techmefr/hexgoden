@@ -7,7 +7,7 @@
   import Icon from "./Icon.svelte";
   import RankingPanel from "./RankingPanel.svelte";
 
-  let { progress, onbegin, onunlock, onbuy, onrent }: { progress: Progress; onbegin: (seed: number, god: GodId) => void; onunlock: (god: GodId) => void; onbuy: (power: Power) => void; onrent: (power: Power) => void } = $props();
+  let { progress, onbegin, onunlock, onbuy, onrent, onreplay }: { progress: Progress; onbegin: (seed: number, god: GodId) => void; onunlock: (god: GodId) => void; onbuy: (power: Power) => void; onrent: (power: Power) => void; onreplay: () => void } = $props();
   let seedText = $state(String(Math.floor(100000 + Math.random() * 900000)));
   let chosen = $state<GodId>("water");
   const seed = $derived(Number.parseInt(seedText, 10) || 1);
@@ -42,6 +42,8 @@
   </div>
   <button class="btn primary" type="submit">{t("begin")}</button>
 </form>
+
+<button class="btn" type="button" onclick={onreplay}>{t("tutorialReplay")}</button>
 
 <MarketPanel {progress} {onbuy} {onrent} />
 

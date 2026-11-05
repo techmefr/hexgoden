@@ -42,7 +42,7 @@ const smoothNoise = (rng: Rng, x: number, y: number, z: number, phases: number[]
   return value;
 };
 
-export const createWorld = (seed: number, frequency = GRID_FREQUENCY): World => {
+export const createWorld = (seed: number, frequency = GRID_FREQUENCY, arid = false): World => {
   const grid = buildGrid(frequency);
   const rng: Rng = { state: seed >>> 0 };
   const phases = Array.from({ length: 24 }, () => nextRange(rng, 0, Math.PI * 2));
@@ -70,13 +70,14 @@ export const createWorld = (seed: number, frequency = GRID_FREQUENCY): World => 
     const x = grid.centers[tile * 3];
     const y = grid.centers[tile * 3 + 1];
     const z = grid.centers[tile * 3 + 2];
-    const altitude = smoothNoise(rng, x, y, z, phases) * 0.55 + 0.05;
+    const altitude = smoothNoise(rng, x, y, z, phases) * 0.55 + (arid ? 0.3 : 0.05);
     world.altitude[tile] = clamp(altitude, -0.6, 1.1);
-    world.humidity[tile] = clamp(0.5 + smoothNoise(rng, x, y, z, wetPhases) * 0.35, 0.1, 0.95);
+    const wet = smoothNoise(rng, x, y, z, wetPhases);
+    world.humidity[tile] = arid ? clamp(0.06 + wet * 0.05, 0.02, 0.15) : clamp(0.5 + wet * 0.35, 0.1, 0.95);
     world.baseHumidity[tile] = world.humidity[tile];
-    world.temperature[tile] = clamp(baseTemperature(y) - Math.max(0, altitude) * 0.3, 0, 1);
+    world.temperature[tile] = clamp(baseTemperature(y) + (arid ? 0.2 : 0) - Math.max(0, altitude) * 0.3, 0, 1);
     world.fertility[tile] = 0.2;
-    world.vegetation[tile] = altitude > SEA_LEVEL ? 0.05 : 0;
+    world.vegetation[tile] = altitude > SEA_LEVEL ? (arid ? 0.02 : 0.05) : 0;
   }
   return world;
 };

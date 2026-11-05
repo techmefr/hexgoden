@@ -1,5 +1,6 @@
 import { godById, type GodId } from "../sim/gods";
 import type { Power } from "../sim/powers";
+import { STAGES } from "../sim/vitality";
 import { TIERS, tierFor, type RankTier } from "./ranking";
 import type { Progress } from "./store";
 
@@ -18,8 +19,6 @@ export const OFFERS: Offer[] = [
   { power: "chill", god: "wind", tier: "wisp", buy: 100, rent: 25 },
   { power: "rain", god: "water", tier: "spring", buy: 200, rent: 40 },
   { power: "sun", god: "water", tier: "spring", buy: 200, rent: 40 },
-  { power: "raise", god: "water", tier: "river", buy: 300, rent: 60 },
-  { power: "lower", god: "water", tier: "river", buy: 300, rent: 60 },
 ];
 
 export type OfferStatus = "owned" | "rented" | "locked" | "available";
@@ -51,7 +50,8 @@ export const rentPower = (progress: Progress, power: Power, now: number): Progre
   return { ...progress, points: progress.points - offer.rent, rentals: { ...progress.rentals, [power]: now + RENT_MS } };
 };
 
-export const runPowers = (progress: Progress, god: GodId, now: number): Power[] => {
+export const runPowers = (progress: Progress, god: GodId, now: number, stage = 0): Power[] => {
   const rented = OFFERS.filter((offer) => rentedUntil(progress, offer.power) > now).map((offer) => offer.power);
-  return [...new Set<Power>([...godById(god).powers, ...progress.owned, ...rented])];
+  const earned = STAGES.slice(0, stage + 1).flatMap((s) => (s.power ? [s.power] : []));
+  return [...new Set<Power>([...godById(god).powers, ...progress.owned, ...rented, ...earned])];
 };

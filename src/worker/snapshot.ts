@@ -1,4 +1,5 @@
 import { biomeIndex, biomeOf } from '../sim/terrain';
+import { vitality } from '../sim/vitality';
 import { speciesTotal } from '../sim/life';
 import { SPECIES_CAP, type World } from '../sim/world';
 import type { Snapshot, SpeciesInfo } from './protocol';
@@ -26,6 +27,7 @@ export const makeSnapshot = (world: World, previous: Map<number, number>, points
   return {
     tick: world.tick,
     points,
+    vitality: vitality(world),
     altitude: world.altitude.slice(),
     humidity: world.humidity.slice(),
     temperature: world.temperature.slice(),
