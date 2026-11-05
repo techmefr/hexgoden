@@ -8,7 +8,7 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
   import Tutorial from "./ui/Tutorial.svelte";
   import { addPoints, loadProgress, saveProgress, unlockGod, type Progress } from "./meta/store";
   import { PlanetView } from "./render/planet-view";
-  import { type GodId } from "./sim/gods";
+  import { godById, type GodId } from "./sim/gods";
   import { buildGrid } from "./sim/grid";
   import type { Power } from "./sim/powers";
   import { GRID_FREQUENCY } from "./sim/world";
@@ -26,6 +26,9 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
   let active = $state<Power | null>("rain");
   let banked = 0;
   let stageReached = $state(0);
+  let speed = $state(1);
+  const speeds = $derived(godById(god).speeds);
+  const setSpeed = (factor: number): void => { speed = factor; send({ type: "speed", factor }); };
   let notice = $state("");
   let lastEventTick = -1;
   let noticeTimer: ReturnType<typeof setTimeout> | null = null;
@@ -79,6 +82,7 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
   const begin = (seed: number, chosen: GodId): void => {
     god = chosen;
     stageReached = 0;
+    speed = 1;
     lastEventTick = -1;
     notice = "";
     powers = runPowers(progress, chosen, Date.now(), 0);
@@ -96,7 +100,7 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
       });
       worker = new Worker(new URL("./worker/sim.worker.ts", import.meta.url), { type: "module" });
       worker.onmessage = (event: MessageEvent<FromWorker>) => onSnapshot(event.data.snapshot);
-      worker.postMessage({ type: "init", seed, powers: [...powers] } satisfies ToWorker);
+      worker.postMessage({ type: "init", seed, powers: [...powers], speeds: [...godById(chosen).speeds] } satisfies ToWorker);
     });
   };
 
@@ -123,6 +127,7 @@ import { advanceTutorial, replayTutorial, skipTutorial, tutorialActive } from ".
   <div class="stage" data-screen="game">
     <header class="topbar">
       <div class="title"><h1>{t("planet")}</h1><p>{t(`stage${STAGES[stage].id[0].toUpperCase()}${STAGES[stage].id.slice(1)}` as MessageKey)} · {Math.round(stageProgress * 100)}% · {t("harmony")} {Math.floor(progress.points)}{#if (snapshot?.era ?? 0) > 0 || (snapshot && snapshot.settlement.some((v) => v > 0.02))} · {t(`era${ERAS[snapshot?.era ?? 0].id[0].toUpperCase()}${ERAS[snapshot?.era ?? 0].id.slice(1)}` as MessageKey)}{/if}</p><progress max="1" value={stageProgress} aria-label={t("vitality")}></progress></div>
+      {#if speeds.length > 1}<nav class="examples" aria-label={t("speed")}>{#each speeds as factor (factor)}<button class="btn" type="button" aria-pressed={speed === factor} onclick={() => setSpeed(factor)}>x{factor}</button>{/each}</nav>{/if}
       <nav class="examples" aria-label={t("tile")}>
         <button class="btn" type="button" aria-pressed={view === "tile"} onclick={() => (view = "tile")}>{t("tile")}</button>
         <button class="btn" type="button" aria-pressed={view === "species"} onclick={() => (view = "species")}>{t("species")}</button>

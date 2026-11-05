@@ -11,7 +11,7 @@
   let seedText = $state(String(Math.floor(100000 + Math.random() * 900000)));
   let chosen = $state<GodId>("water");
   const seed = $derived(Number.parseInt(seedText, 10) || 1);
-  const ICONS: Record<GodId, string> = { water: "drop", wind: "wind", stone: "stone" };
+  const ICONS: Record<GodId, string> = { water: "drop", wind: "wind", stone: "stone", time: "clock" };
 </script>
 
 <form class="card" onsubmit={(e) => { e.preventDefault(); onbegin(seed, chosen); }}>

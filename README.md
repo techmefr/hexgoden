@@ -26,7 +26,8 @@ Responsive, installable as a PWA and playable offline. No account, no server, pr
 | Random events: meteorite, drought, flood, volcano, cold snap | 006 | done |
 | Civilizations that emerge, grow and fade | 007 | done |
 | Stone god (raise and lower land) | 008 | done |
-| Time god, space map | later | planned |
+| Time god (speed x1, x2, x4) | 009 | done |
+| Space map, peoples technology | later | planned |
 
 ## Develop
 

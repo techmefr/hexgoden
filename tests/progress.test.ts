@@ -73,3 +73,13 @@ describe('wind god', () => {
     expect(world.temperature[tile]).toBeLessThan(temperature);
   });
 });
+
+describe("time god", () => {
+  it("is unlocked at 800 points and is the only god with speeds", () => {
+    expect(canUnlock(addPoints(freshProgress(), 799), "time")).toBe(false);
+    expect(canUnlock(addPoints(freshProgress(), 800), "time")).toBe(true);
+    expect(godById("time").speeds).toEqual([1, 2, 4]);
+    expect(godById("water").speeds).toEqual([1]);
+    expect(godById("wind").speeds).toEqual([1]);
+  });
+});

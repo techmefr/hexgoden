@@ -39,7 +39,8 @@ export interface Snapshot {
 }
 
 export type ToWorker =
-  | { type: 'init'; seed: number; powers: Power[] }
+  | { type: 'init'; seed: number; powers: Power[]; speeds: number[] }
+  | { type: 'speed'; factor: number }
   | { type: 'powers'; powers: Power[] }
   | { type: 'power'; tile: number; power: Power }
   | { type: 'visible'; visible: boolean };

@@ -13,6 +13,8 @@ let world: World | null = null;
 let timer: ReturnType<typeof setInterval> | null = null;
 let previous = new Map<number, number>();
 let allowed: Power[] = [];
+let speeds: number[] = [1];
+let speed = 1;
 let points = 0;
 
 const post = (snapshot: Snapshot): void => {
@@ -38,7 +40,7 @@ const start = (): void => {
     step(world);
     points += tickPoints(world);
     publish();
-  }, TICK_MS);
+  }, TICK_MS / speed);
 };
 
 self.onmessage = (event: MessageEvent<ToWorker>): void => {
@@ -46,9 +48,14 @@ self.onmessage = (event: MessageEvent<ToWorker>): void => {
   if (message.type === 'init') {
     world = newWorld(message.seed, true);
     allowed = message.powers;
+    speeds = message.speeds;
+    speed = 1;
     points = 0;
     previous = new Map();
     publish();
+    start();
+  } else if (message.type === 'speed' && speeds.includes(message.factor)) {
+    speed = message.factor;
     start();
   } else if (message.type === 'powers') {
     allowed = message.powers;

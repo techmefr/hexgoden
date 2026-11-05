@@ -22,7 +22,7 @@ export const freshProgress = (): Progress => ({ version: 1, points: 0, earned: 0
 
 const isPower = (value: unknown): value is Power => POWERS.includes(value as Power);
 
-const isGodId = (value: unknown): value is GodId => value === 'water' || value === 'wind' || value === 'stone';
+const isGodId = (value: unknown): value is GodId => value === 'water' || value === 'wind' || value === 'stone' || value === 'time';
 
 export const parseProgress = (raw: string | null): Progress => {
   if (!raw) return freshProgress();
