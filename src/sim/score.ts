@@ -1,8 +1,8 @@
 import { speciesTotal } from './life';
 import type { World } from './world';
 
-export const SPECIES_POINTS = 0.02;
-export const VEGETATION_POINTS = 0.002;
+export const SPECIES_POINTS = 0.004;
+export const VEGETATION_POINTS = 0.0002;
 
 export const tickPoints = (world: World): number => {
   let living = 0;

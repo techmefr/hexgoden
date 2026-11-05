@@ -2,7 +2,8 @@ import { godById, type GodId } from '../sim/gods';
 import { applyPower } from '../sim/powers';
 import { tickPoints } from '../sim/score';
 import { step } from '../sim/tick';
-import { createWorld, type World } from '../sim/world';
+import { newWorld } from '../sim/start';
+import type { World } from '../sim/world';
 import type { FromWorker, Snapshot, ToWorker } from './protocol';
 import { makeSnapshot } from './snapshot';
 
@@ -44,7 +45,7 @@ const start = (): void => {
 self.onmessage = (event: MessageEvent<ToWorker>): void => {
   const message = event.data;
   if (message.type === 'init') {
-    world = createWorld(message.seed);
+    world = newWorld(message.seed);
     god = message.god;
     points = 0;
     previous = new Map();

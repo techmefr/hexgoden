@@ -20,7 +20,8 @@ const growVegetation = (world: World): void => {
     let seedSource = 0;
     for (const n of grid.neighbors[tile]) seedSource = Math.max(seedSource, vegetation[n]);
     const capacity = suitability * (0.6 + fertility[tile] * 0.4);
-    const growth = 0.06 * vegetation[tile] * (1 - vegetation[tile] / Math.max(capacity, 0.05)) + 0.006 * seedSource * suitability;
+    const raw = 0.06 * vegetation[tile] * (1 - vegetation[tile] / Math.max(capacity, 0.05));
+    const growth = (raw < 0 ? Math.max(raw, -0.012 * vegetation[tile]) : raw) + 0.006 * seedSource * suitability;
     vegetation[tile] = clamp(vegetation[tile] + growth, 0, 1);
     fertility[tile] = clamp(fertility[tile] - 0.0004, 0.1, 1);
   }

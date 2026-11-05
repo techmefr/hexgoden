@@ -11,11 +11,12 @@ const touch = (world: World, tile: number, apply: (target: number, weight: numbe
 
 export const applyPower = (world: World, tile: number, power: Power): void => {
   if (tile < 0 || tile >= world.grid.count) return;
-  const { humidity, temperature, water, altitude, tension } = world;
+  const { humidity, baseHumidity, temperature, water, altitude, tension } = world;
   switch (power) {
     case 'rain':
       touch(world, tile, (t, w) => {
         humidity[t] = clamp(humidity[t] + 0.35 * w, 0, 1);
+        baseHumidity[t] = clamp(baseHumidity[t] + 0.12 * w, 0.05, 0.98);
         if (altitude[t] >= 0) water[t] = clamp(water[t] + 0.22 * w, 0, 1);
         temperature[t] = clamp(temperature[t] - 0.05 * w, 0, 1);
       });
@@ -24,6 +25,7 @@ export const applyPower = (world: World, tile: number, power: Power): void => {
       touch(world, tile, (t, w) => {
         temperature[t] = clamp(temperature[t] + 0.22 * w, 0, 1);
         humidity[t] = clamp(humidity[t] - 0.18 * w, 0, 1);
+        baseHumidity[t] = clamp(baseHumidity[t] - 0.1 * w, 0.05, 0.98);
         water[t] = clamp(water[t] - 0.15 * w, 0, 1);
       });
       break;
