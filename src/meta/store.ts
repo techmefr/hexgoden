@@ -3,6 +3,7 @@ import { godById, type GodId } from '../sim/gods';
 export interface Progress {
   version: 1;
   points: number;
+  earned: number;
   unlocked: GodId[];
 }
 
@@ -13,7 +14,7 @@ export interface KeyValueStorage {
 
 export const STORAGE_KEY = 'hexgoden.progress';
 
-export const freshProgress = (): Progress => ({ version: 1, points: 0, unlocked: ['water'] });
+export const freshProgress = (): Progress => ({ version: 1, points: 0, earned: 0, unlocked: ['water'] });
 
 const isGodId = (value: unknown): value is GodId => value === 'water' || value === 'wind' || value === 'stone';
 
@@ -24,7 +25,8 @@ export const parseProgress = (raw: string | null): Progress => {
     const valid = data.version === 1 && typeof data.points === 'number' && Number.isFinite(data.points) && data.points >= 0 && Array.isArray(data.unlocked);
     if (!valid) return freshProgress();
     const unlocked = [...new Set<GodId>(['water', ...(data.unlocked as unknown[]).filter(isGodId)])];
-    return { version: 1, points: data.points as number, unlocked };
+    const earned = typeof data.earned === 'number' && Number.isFinite(data.earned) && data.earned >= data.points! ? data.earned : (data.points as number);
+    return { version: 1, points: data.points as number, earned, unlocked };
   } catch {
     return freshProgress();
   }
@@ -46,7 +48,7 @@ export const saveProgress = (storage: KeyValueStorage | null, progress: Progress
   }
 };
 
-export const addPoints = (progress: Progress, amount: number): Progress => (amount > 0 ? { ...progress, points: progress.points + amount } : progress);
+export const addPoints = (progress: Progress, amount: number): Progress => (amount > 0 ? { ...progress, points: progress.points + amount, earned: progress.earned + amount } : progress);
 
 export const canUnlock = (progress: Progress, id: GodId): boolean => {
   const god = godById(id);

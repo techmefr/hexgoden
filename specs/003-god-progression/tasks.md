@@ -7,5 +7,5 @@
 - [x] T005 [US2] Start screen with points, prices, unlock and god choice
 - [x] T006 [US2] Power bar per god, i18n messages
 - [x] T007 Smoke test update, README, PR, merge, verify live
-- [ ] T008 [US3] Ranking of gods (later)
+- [x] T008 [US3] Ranking of gods (solo, lifetime points, tiers)
 - [ ] T009 [US4] Team and bought powers (later)

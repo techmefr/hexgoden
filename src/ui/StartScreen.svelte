@@ -3,6 +3,7 @@
   import { canUnlock, missingPoints, type Progress } from "../meta/store";
   import { GODS, type GodId } from "../sim/gods";
   import Icon from "./Icon.svelte";
+  import RankingPanel from "./RankingPanel.svelte";
 
   let { progress, onbegin, onunlock }: { progress: Progress; onbegin: (seed: number, god: GodId) => void; onunlock: (god: GodId) => void } = $props();
   let seedText = $state(String(Math.floor(100000 + Math.random() * 900000)));
@@ -39,3 +40,5 @@
   </div>
   <button class="btn primary" type="submit">{t("begin")}</button>
 </form>
+
+<RankingPanel earned={progress.earned} />
