@@ -16,5 +16,5 @@
 - [x] T014 [US2] `scripts/shoot-mockups.mjs` (overflow at 360, 390, 768, 1024, 1440, 1920; target sizes; screenshots)
 - [x] T015 [US3] Fix findings and record results in `design/mockups/README.md`
 - [x] T016 [US1] `.github/workflows/pages.yml` publishing the gallery under `/mockups/`
-- [ ] T017 Commit, push, open and merge the PR
-- [ ] T018 Verify the live gallery, seven screens, stylesheet and reference image
+- [x] T017 Commit, push, open and merge the PR
+- [x] T018 Verify the live gallery, seven screens, stylesheet and reference image

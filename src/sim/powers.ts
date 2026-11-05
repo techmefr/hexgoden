@@ -1,0 +1,43 @@
+import { clamp } from './rng';
+import type { World } from './world';
+
+export type Power = 'rain' | 'sun' | 'raise' | 'lower';
+export const POWERS: Power[] = ['rain', 'sun', 'raise', 'lower'];
+
+const touch = (world: World, tile: number, apply: (target: number, weight: number) => void): void => {
+  apply(tile, 1);
+  for (const neighbor of world.grid.neighbors[tile]) apply(neighbor, 0.4);
+};
+
+export const applyPower = (world: World, tile: number, power: Power): void => {
+  if (tile < 0 || tile >= world.grid.count) return;
+  const { humidity, temperature, water, altitude, tension } = world;
+  switch (power) {
+    case 'rain':
+      touch(world, tile, (t, w) => {
+        humidity[t] = clamp(humidity[t] + 0.35 * w, 0, 1);
+        if (altitude[t] >= 0) water[t] = clamp(water[t] + 0.22 * w, 0, 1);
+        temperature[t] = clamp(temperature[t] - 0.05 * w, 0, 1);
+      });
+      break;
+    case 'sun':
+      touch(world, tile, (t, w) => {
+        temperature[t] = clamp(temperature[t] + 0.22 * w, 0, 1);
+        humidity[t] = clamp(humidity[t] - 0.18 * w, 0, 1);
+        water[t] = clamp(water[t] - 0.15 * w, 0, 1);
+      });
+      break;
+    case 'raise':
+      touch(world, tile, (t, w) => {
+        altitude[t] = clamp(altitude[t] + 0.14 * w, -0.6, 1.1);
+        tension[t] = clamp(tension[t] + 0.3 * w, 0, 1);
+      });
+      break;
+    case 'lower':
+      touch(world, tile, (t, w) => {
+        altitude[t] = clamp(altitude[t] - 0.14 * w, -0.6, 1.1);
+        tension[t] = clamp(tension[t] - 0.12 * w, 0, 1);
+      });
+      break;
+  }
+};

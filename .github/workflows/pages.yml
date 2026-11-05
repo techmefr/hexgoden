@@ -3,9 +3,6 @@ name: Pages
 on:
   push:
     branches: [main]
-    paths:
-      - design/mockups/**
-      - .github/workflows/pages.yml
   workflow_dispatch:
 
 permissions:
@@ -25,15 +22,25 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Assemble site
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm check
+      - run: pnpm build
+        env:
+          PAGES_BASE: /hexgoden/
+      - name: Add the mockup gallery
         run: |
-          mkdir -p _site/mockups
-          cp -r design/mockups/. _site/mockups/
-          rm -rf _site/mockups/screenshots
-          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=mockups/"><title>HexGoden</title><a href="mockups/">Mockups</a>\n' > _site/index.html
+          mkdir -p dist/mockups
+          cp -r design/mockups/. dist/mockups/
+          rm -rf dist/mockups/screenshots
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
       - id: deployment
         uses: actions/deploy-pages@v4

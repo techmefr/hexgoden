@@ -1,0 +1,10 @@
+@import "../../design/mockups/tokens.css";
+@import "../../design/mockups/shared.css";
+
+#app { min-height: 100dvh; }
+.world { padding: 0; }
+.world canvas { display: block; width: 100%; height: 100%; }
+.btn[aria-pressed="true"] .hint { color: var(--accent-ink); }
+.start { min-height: 100dvh; display: grid; place-items: center; padding: var(--space-4); }
+.start .card { width: min(440px, 100%); }
+.btn.primary { width: 100%; }
