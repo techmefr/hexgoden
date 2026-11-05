@@ -56,17 +56,18 @@ Banked points place the player in a ranking of simulated gods; ranks are named a
 
 ---
 
-### User Story 4 - Recruit gods and buy their powers (Priority: P3)
+### User Story 4 - Buy or rent other gods' powers (Priority: P3)
 
-Gods met through the ranking can join the team; their powers can be bought and combined on a planet.
+The ranking only serves to reach other gods: a higher rank opens their powers. A power can be bought for good or rented for a limited time, then used from a Worms-style power menu (a grid of power cards grouped by god) in any run.
 
 **Why this priority**: the end goal of the progression, needs the ranking.
 
-**Independent Test**: a recruited god's power appears in the power bar of any run.
+**Independent Test**: rent a power of a ranked god; it appears in the power menu for the rental duration, then disappears.
 
 **Acceptance Scenarios**:
 
-1. **Given** a recruited god, **When** its power is bought with points, **Then** it is available in every run.
+1. **Given** a god within reach of the player's rank, **When** a power is bought, **Then** it stays in the power menu of every run.
+2. **Given** a rented power, **When** the rental ends, **Then** it leaves the menu and can be rented again.
 
 ---
 
